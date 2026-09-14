@@ -32,3 +32,11 @@ google-services.json
 
 # Android Profiling
 *.hprof
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos temporales de compilación / parches
+*.tmp
+*.bak
