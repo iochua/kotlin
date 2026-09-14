@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">prueba3</string>
+    <string name="hint_first_value">Ingrese el primer valor</string>
+    <string name="hint_second_value">Ingrese el segundo valor</string>
+    <string name="btn_sum">Sumar</string>
+    <string name="result_text">Resultado=0</string>
+</resources>
