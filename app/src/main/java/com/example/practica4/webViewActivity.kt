@@ -1,6 +1,9 @@
 package com.example.practica4
 
 import android.os.Bundle
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -15,6 +18,19 @@ class webViewActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+        val webView = findViewById<WebView>(R.id.webView)
+        val btnRegresar = findViewById<Button>(R.id.btnRegresar)
+
+        val bundle = intent.extras
+        val dato = bundle?.getString("url")
+
+        webView.settings.javaScriptEnabled = true
+        webView.webViewClient = WebViewClient()
+        webView.loadUrl("https://$dato")
+
+        btnRegresar.setOnClickListener{
+            finish()
         }
     }
 }

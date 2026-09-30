@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intento)
         }
         btnParametros.setOnClickListener{
-            val intento = Intent(this, paramestrosActivity::class.java)
+            val intento = Intent(this, parametrosActivity::class.java)
             startActivity(intento)
         }
     }

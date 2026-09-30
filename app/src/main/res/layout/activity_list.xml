@@ -21,6 +21,8 @@
         android:id="@+id/ListCarreras"
         android:layout_width="409dp"
         android:layout_height="681dp"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="49dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtSeleccion" />
 </androidx.constraintlayout.widget.ConstraintLayout>

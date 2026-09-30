@@ -29,9 +29,11 @@ class toastActivity : AppCompatActivity() {
             if(claveIngresada == "123456"){
                 Toast.makeText(this,"Bienvenido",Toast.LENGTH_SHORT).show()
             }else{
-                Toast.makeText(this,"CLave Incorrecta",Toast.LENGTH_SHORT).show()
-
+                Toast.makeText(this,"Clave Incorrecta",Toast.LENGTH_SHORT).show()
             }
+        }
+        btnSalir.setOnClickListener {
+            finish()
         }
     }
 }
