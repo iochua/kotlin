@@ -28,13 +28,13 @@ class adivinanzaActivity : AppCompatActivity() {
         val txtNumero = findViewById<EditText>(R.id.txtNumero)
         val btnVerificar = findViewById<Button>(R.id.btnVerificar)
 
-        numSecreto = (1..3).random()
+        numSecreto = (1..50).random()
 
         btnVerificar.setOnClickListener {
-            val textoIngresado = txtNumero.text.toString()
-            if (textoIngresado.isNotEmpty()) {
-                val numero = textoIngresado.toIntOrNull()
-                if (numero != null && numero in 1..3) {
+            val numerotexto = txtNumero.text.toString()
+            if (numerotexto.isNotEmpty()) {
+                val numero = numerotexto.toInt()
+                if (numero in 1..50) {
                     if (numero == numSecreto) {
                         Toast.makeText(this, "Felicidades $nombreUsuario, adivinaste el numero", Toast.LENGTH_SHORT).show()
                         val preferencias = getSharedPreferences("puntajes", MODE_PRIVATE)
