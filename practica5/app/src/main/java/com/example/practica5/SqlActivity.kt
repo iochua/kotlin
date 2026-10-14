@@ -1,5 +1,6 @@
 package com.example.practica5
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.os.Bundle
 import android.widget.Button
@@ -11,6 +12,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class SqlActivity : AppCompatActivity() {
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -27,6 +29,7 @@ class SqlActivity : AppCompatActivity() {
         val btnConsulta = findViewById<Button>(R.id.btnConsulta)
         val btnEliminar = findViewById<Button>(R.id.btnEliminar)
         val btnModificar = findViewById<Button>(R.id.btnModificar)
+        val btnBuscar = findViewById<Button>(R.id.btnBuscar)
 
         btnAlta.setOnClickListener{
             val admin = AdminSQLiteOpenHelper(this, "administracion", null, 1)
@@ -50,7 +53,7 @@ class SqlActivity : AppCompatActivity() {
             val admin = AdminSQLiteOpenHelper(this, "administracion", null, 1)
             val bd = admin.writableDatabase
 
-            val fila = bd.rawQuery("select descripcion, precio from articulos where codigo=${txtCodigo.text.toString()}",null)
+            val fila = bd.rawQuery("select descripcion, precio from articulos where codigo='${txtCodigo.text.toString()}'",null)
             if (fila.moveToFirst()) {
                 txtDescripcion.setText(fila.getString(0))
                 txtPrecio.setText(fila.getString(0))
@@ -86,6 +89,18 @@ class SqlActivity : AppCompatActivity() {
                 Toast.makeText(this,"Se modificaron los datos del articulo",Toast.LENGTH_SHORT).show()
             }else
                 Toast.makeText(this,"No existe u  articulo con dicho codigo",Toast.LENGTH_SHORT).show()
+        }
+        btnBuscar.setOnClickListener{
+            val admin = AdminSQLiteOpenHelper(this, "administracion", null, 1)
+            val bd = admin.writableDatabase
+
+            val fila = bd.rawQuery("select codigo, precio from articulos where descripcion='${txtDescripcion.text.toString()}'",null)
+            if (fila.moveToFirst()) {
+                txtCodigo.setText(fila.getString(0))
+                txtPrecio.setText(fila.getString(0))
+            }else
+                Toast.makeText(this,"No existe un articulo con esta descripcion",Toast.LENGTH_SHORT).show()
+            bd.close()
         }
     }
 }

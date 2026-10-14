@@ -19,9 +19,15 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         val btnSql = findViewById<Button>(R.id.btnSql)
+        val btnLayout = findViewById<Button>(R.id.btnLayout)
+
 
         btnSql.setOnClickListener{
             val intento = Intent(this, SqlActivity::class.java)
+            startActivity(intento)
+        }
+        btnLayout.setOnClickListener{
+            val intento = Intent(this, LayoutActivity::class.java)
             startActivity(intento)
         }
     }
