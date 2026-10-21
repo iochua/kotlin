@@ -65,7 +65,7 @@ class SqlActivity : AppCompatActivity() {
             val admin = AdminSQLiteOpenHelper(this,"administracion",null,1)
             val db = admin.writableDatabase
 
-            val cant = db.delete("articulos","codigo=${txtCodigo.text.toString()}",null)
+            val cant = db.delete("articulos","codigo='${txtCodigo.text.toString()}'",null)
             txtCodigo.setText("")
             txtDescripcion.setText("")
             txtPrecio.setText("")
@@ -83,7 +83,7 @@ class SqlActivity : AppCompatActivity() {
             registros.put("descripcion",txtDescripcion.text.toString())
             registros.put("precio",txtPrecio.text.toString())
 
-            val cant = db.update("articulos",registros,"codigo=${txtCodigo.text.toString()}",null)
+            val cant = db.update("articulos",registros,"codigo='${txtCodigo.text.toString()}'",null)
             db.close()
             if(cant==1){
                 Toast.makeText(this,"Se modificaron los datos del articulo",Toast.LENGTH_SHORT).show()
