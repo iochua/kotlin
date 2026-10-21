@@ -14,8 +14,11 @@ class AdminSQLiteOpenHelper(
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(
             "create table contactos(" +
-                    "numero int primary key," +
-                    "nombre text)"
+                    "numero int NOT NULL primary key," +
+                    "nombre text NOT NULL," +
+                    "email text," +
+                    "direccion text," +
+                    "notas text)"
         )
     }
 

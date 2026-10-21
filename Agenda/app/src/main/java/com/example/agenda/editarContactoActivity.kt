@@ -23,11 +23,26 @@ class editarContactoActivity : AppCompatActivity() {
         }
         val txtNombre = findViewById<EditText>(R.id.txtNombre2)
         val txtNumero = findViewById<EditText>(R.id.txtNumero2)
+        val txtEmail = findViewById<EditText>(R.id.txtEmail2)
+        val txtDireccion = findViewById<EditText>(R.id.txtDireccion2)
+        val txtNotas = findViewById<EditText>(R.id.txtNotas2)
         val btnGuardar = findViewById<Button>(R.id.btnGuardar2)
         val btnEliminar = findViewById<Button>(R.id.btnEliminar)
         val btnSalir = findViewById<Button>(R.id.btnSalir2)
         var ogNombre = intent.getStringExtra("nombreContacto")
         var ogNumero = intent.getStringExtra("numeroContacto")
+
+        val admin = AdminSQLiteOpenHelper(this, "administracion", null, 1)
+        val bd = admin.readableDatabase
+        val cursor = bd.rawQuery("SELECT email, direccion, notas FROM contactos WHERE numero='$ogNumero'", null)
+
+        if (cursor.moveToFirst()) {
+            txtEmail.setText(cursor.getString(0) ?: "")
+            txtDireccion.setText(cursor.getString(1) ?: "")
+            txtNotas.setText(cursor.getString(2) ?: "")
+        }
+        cursor.close()
+        bd.close()
 
         txtNombre.setText(ogNombre)
         txtNumero.setText(ogNumero)
@@ -37,29 +52,26 @@ class editarContactoActivity : AppCompatActivity() {
             val bd = admin.writableDatabase
             val newNombre = txtNombre.text.toString().trim()
             val newNumero = txtNumero.text.toString().trim()
+            val email = txtEmail.text.toString().trim()
+            val direccion = txtDireccion.text.toString().trim()
+            val notas = txtNotas.text.toString().trim()
 
-            if (newNombre.isEmpty()) {
-                Toast.makeText(this, "El nombre no puede estar vacío", Toast.LENGTH_SHORT).show()
+            if (newNombre.isEmpty() || newNumero.isEmpty()) {
+                Toast.makeText(this, "El nombre y/o número no pueden estar vacíos", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // 2. Validación: Teléfono con solo dígitos y mínimo 7 caracteres
-            // Usamos una expresión regular (Regex) para verificar que solo sean números del 0 al 9
-            if (!newNumero.matches(Regex("^[0-9]{7,}$"))) {
-                Toast.makeText(this, "El teléfono debe tener al menos 7 dígitos y sin letras", Toast.LENGTH_SHORT).show()
+            if (newNumero.length < 7) {
+                Toast.makeText(this, "El teléfono debe tener al menos 7 dígitos", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // 3. Validación: No duplicados
-            val admin = AdminSQLiteOpenHelper(this, "administracion", null, 1)
-
-            // Validar si es un NUEVO registro o si cambió de número en la edición
-            // (Si estás en la pantalla de agregar, simplemente usa esta consulta directa)
+            //cambiar el nombre de estas variables
             val bdConsulta = admin.readableDatabase
             val cursor = bdConsulta.rawQuery("SELECT numero FROM contactos WHERE numero='$newNumero'", null)
 
             if (cursor.moveToFirst()) {
-                Toast.makeText(this, "Este teléfono ya existe en tus contactos", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Ya existe un contacto con este número", Toast.LENGTH_SHORT).show()
                 cursor.close()
                 bdConsulta.close()
                 return@setOnClickListener
@@ -69,6 +81,15 @@ class editarContactoActivity : AppCompatActivity() {
             val registro = ContentValues()
             registro.put("nombre", newNombre)
             registro.put("numero", newNumero)
+            if (email.isNotEmpty())
+                registro.put("email",email)
+            else registro.putNull("email", email)
+            if (direccion.isNotEmpty())
+                registro.put("direccion",direccion)
+            else registro.putNull("direccion", direccion)
+            if (notas.isNotEmpty())
+                registro.put("notas",notas)
+            else registro.putNull("notas", notas)
 
             val cant = bd.update("contactos",registro,"numero='$ogNumero'",null)
             bd.close()

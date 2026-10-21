@@ -24,23 +24,63 @@ class agregarActivity : AppCompatActivity() {
         }
         val txtNombre = findViewById<EditText>(R.id.txtNombre)
         val txtNumero = findViewById<EditText>(R.id.txtNumero)
+        val txtEmail = findViewById<EditText>(R.id.txtEmail)
+        val txtDireccion = findViewById<EditText>(R.id.txtDireccion)
+        val txtNotas = findViewById<EditText>(R.id.txtNotas)
         val btnGuardar = findViewById<Button>(R.id.btnGuardar)
         val btnSalir = findViewById<Button>(R.id.btnSalir)
 
         btnGuardar.setOnClickListener {
             val admin = AdminSQLiteOpenHelper(this, "administracion", null, 1)
             val bd = admin.writableDatabase
+            val numero = txtNumero.text.toString().trim()
+            val nombre = txtNombre.text.toString().trim()
+            val email = txtEmail.text.toString().trim()
+            val direccion = txtDireccion.text.toString().trim()
+            val notas = txtNotas.text.toString().trim()
+
+            if (nombre.isEmpty() || numero.isEmpty()) {
+                Toast.makeText(this, "El nombre y/o número no pueden estar vacíos", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (numero.length < 7) {
+                Toast.makeText(this, "El teléfono debe tener al menos 7 dígitos", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            //cambiar el nombre de estas variables
+            val bdConsulta = admin.readableDatabase
+            val cursor = bdConsulta.rawQuery("SELECT numero FROM contactos WHERE numero='$numero'", null)
+
+            if (cursor.moveToFirst()) {
+                Toast.makeText(this, "Ya existe un contacto con este número", Toast.LENGTH_SHORT).show()
+                cursor.close()
+                bdConsulta.close()
+                return@setOnClickListener
+            }
+            cursor.close()
 
             val registro = ContentValues()
-            registro.put("numero",txtNumero.text.toString())
-            registro.put("nombre",txtNombre.text.toString())
+            registro.put("numero",numero)
+            registro.put("nombre",nombre)
+            if (email.isNotEmpty())
+                registro.put("email",email)
+            if (direccion.isNotEmpty())
+                registro.put("direccion",direccion)
+            if (notas.isNotEmpty())
+                registro.put("notas",notas)
+
 
             bd.insert("contactos",null,registro)
 
             txtNumero.setText("")
             txtNombre.setText("")
+            txtEmail.setText("")
+            txtDireccion.setText("")
+            txtNotas.setText("")
 
-            Toast.makeText(this,"Se guardaron los datos del articulo",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"Contacto creado",Toast.LENGTH_SHORT).show()
             bd.close()
         }
 

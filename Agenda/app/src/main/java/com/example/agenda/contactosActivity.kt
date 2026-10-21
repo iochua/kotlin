@@ -34,7 +34,7 @@ class contactosActivity : AppCompatActivity() {
         if (fila.moveToFirst()){
             do {
                 listaNombres.add(fila.getString(0))
-                listaNombres.add(fila.getString(1))
+                listaNumeros.add(fila.getString(1))
             } while (fila.moveToNext())
         }
         bd.close()
