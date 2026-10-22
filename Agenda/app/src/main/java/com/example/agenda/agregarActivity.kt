@@ -32,7 +32,6 @@ class agregarActivity : AppCompatActivity() {
 
         btnGuardar.setOnClickListener {
             val admin = AdminSQLiteOpenHelper(this, "administracion", null, 1)
-            val bd = admin.writableDatabase
             val numero = txtNumero.text.toString().trim()
             val nombre = txtNombre.text.toString().trim()
             val email = txtEmail.text.toString().trim()
@@ -51,16 +50,18 @@ class agregarActivity : AppCompatActivity() {
 
             //cambiar el nombre de estas variables
             val bdConsulta = admin.readableDatabase
-            val cursor = bdConsulta.rawQuery("SELECT numero FROM contactos WHERE numero='$numero'", null)
+            val fila = bdConsulta.rawQuery("SELECT numero FROM contactos WHERE numero='$numero'", null)
 
-            if (cursor.moveToFirst()) {
+            if (fila.moveToFirst()) {
                 Toast.makeText(this, "Ya existe un contacto con este número", Toast.LENGTH_SHORT).show()
-                cursor.close()
+                fila.close()
                 bdConsulta.close()
                 return@setOnClickListener
             }
-            cursor.close()
+            bdConsulta.close()
+            fila.close()
 
+            val bdEscritura = admin.writableDatabase
             val registro = ContentValues()
             registro.put("numero",numero)
             registro.put("nombre",nombre)
@@ -72,7 +73,7 @@ class agregarActivity : AppCompatActivity() {
                 registro.put("notas",notas)
 
 
-            bd.insert("contactos",null,registro)
+            bdEscritura.insert("contactos",null,registro)
 
             txtNumero.setText("")
             txtNombre.setText("")
@@ -81,7 +82,7 @@ class agregarActivity : AppCompatActivity() {
             txtNotas.setText("")
 
             Toast.makeText(this,"Contacto creado",Toast.LENGTH_SHORT).show()
-            bd.close()
+            bdEscritura.close()
         }
 
         btnSalir.setOnClickListener {

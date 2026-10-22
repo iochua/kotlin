@@ -29,27 +29,24 @@ class editarContactoActivity : AppCompatActivity() {
         val btnGuardar = findViewById<Button>(R.id.btnGuardar2)
         val btnEliminar = findViewById<Button>(R.id.btnEliminar)
         val btnSalir = findViewById<Button>(R.id.btnSalir2)
-        var ogNombre = intent.getStringExtra("nombreContacto")
         var ogNumero = intent.getStringExtra("numeroContacto")
 
         val admin = AdminSQLiteOpenHelper(this, "administracion", null, 1)
         val bd = admin.readableDatabase
-        val cursor = bd.rawQuery("SELECT email, direccion, notas FROM contactos WHERE numero='$ogNumero'", null)
+        val fila = bd.rawQuery("SELECT nombre, email, direccion, notas FROM contactos WHERE numero='$ogNumero'", null)
 
-        if (cursor.moveToFirst()) {
-            txtEmail.setText(cursor.getString(0) ?: "")
-            txtDireccion.setText(cursor.getString(1) ?: "")
-            txtNotas.setText(cursor.getString(2) ?: "")
+        if (fila.moveToFirst()) {
+            txtNombre.setText(fila.getString(0) ?: "")
+            txtEmail.setText(fila.getString(1) ?: "")
+            txtDireccion.setText(fila.getString(2) ?: "")
+            txtNotas.setText(fila.getString(3) ?: "")
         }
-        cursor.close()
+        fila.close()
         bd.close()
 
-        txtNombre.setText(ogNombre)
         txtNumero.setText(ogNumero)
 
         btnGuardar.setOnClickListener {
-            val admin = AdminSQLiteOpenHelper(this, "administracion", null, 1)
-            val bd = admin.writableDatabase
             val newNombre = txtNombre.text.toString().trim()
             val newNumero = txtNumero.text.toString().trim()
             val email = txtEmail.text.toString().trim()
@@ -65,54 +62,69 @@ class editarContactoActivity : AppCompatActivity() {
                 Toast.makeText(this, "El teléfono debe tener al menos 7 dígitos", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
-            //cambiar el nombre de estas variables
+            val admin = AdminSQLiteOpenHelper(this, "administracion", null, 1)
             val bdConsulta = admin.readableDatabase
-            val cursor = bdConsulta.rawQuery("SELECT numero FROM contactos WHERE numero='$newNumero'", null)
+            val fila = bdConsulta.rawQuery("SELECT numero FROM contactos WHERE numero='$newNumero'", null)
 
-            if (cursor.moveToFirst()) {
+            if (fila.moveToFirst() && newNumero != ogNumero) {
                 Toast.makeText(this, "Ya existe un contacto con este número", Toast.LENGTH_SHORT).show()
-                cursor.close()
+                fila.close()
                 bdConsulta.close()
                 return@setOnClickListener
             }
-            cursor.close()
+            fila.close()
+            bdConsulta.close()
 
+            val bdEscritura = admin.writableDatabase
             val registro = ContentValues()
             registro.put("nombre", newNombre)
             registro.put("numero", newNumero)
+
             if (email.isNotEmpty())
                 registro.put("email",email)
-            else registro.putNull("email", email)
+            else registro.putNull("email")
             if (direccion.isNotEmpty())
                 registro.put("direccion",direccion)
-            else registro.putNull("direccion", direccion)
+            else registro.putNull("direccion")
             if (notas.isNotEmpty())
                 registro.put("notas",notas)
-            else registro.putNull("notas", notas)
+            else registro.putNull("notas")
 
             val cant = bd.update("contactos",registro,"numero='$ogNumero'",null)
-            bd.close()
+            bdEscritura.close()
+
             if(cant==1){
-                ogNombre = newNombre
                 ogNumero = newNumero
                 Toast.makeText(this,"Se modificaron los datos del contacto",Toast.LENGTH_SHORT).show()
             }else
                 Toast.makeText(this,"Error al modificar cambios",Toast.LENGTH_SHORT).show()
         }
+        var confirmar = false
         btnEliminar.setOnClickListener {
-            val admin = AdminSQLiteOpenHelper(this, "administracion", null, 1)
-            val bd = admin.writableDatabase
-
-            val cant = bd.delete("contactos", "numero='$ogNumero'", null)
-            bd.close()
-
-            if (cant==1){
-                Toast.makeText(this, "Contacto eliminado", Toast.LENGTH_SHORT).show()
-                finish()
+            if (!confirmar) {
+                Toast.makeText(this, "Da clic para confirmar la acción", Toast.LENGTH_SHORT).show()
+                confirmar = true
             } else {
-                Toast.makeText(this, "Error al eliminar contacto", Toast.LENGTH_SHORT).show()
+                val admin = AdminSQLiteOpenHelper(this, "administracion", null, 1)
+                val bd = admin.writableDatabase
+
+                val cant = bd.delete("contactos", "numero='$ogNumero'", null)
+                bd.close()
+
+                if (cant == 1) {
+                    Toast.makeText(this, "Contacto eliminado", Toast.LENGTH_SHORT).show()
+                    val intento = Intent(this, contactosActivity::class.java)
+                    intento.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    startActivity(intento)
+                } else {
+                    Toast.makeText(this, "Error al eliminar contacto", Toast.LENGTH_SHORT).show()
+                }
             }
+        }
+        btnSalir.setOnClickListener {
+            val intento = Intent(this, contactosActivity::class.java)
+            intento.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intento)
         }
     }
 }
