@@ -90,7 +90,7 @@ class editarContactoActivity : AppCompatActivity() {
                 registro.put("notas",notas)
             else registro.putNull("notas")
 
-            val cant = bd.update("contactos",registro,"numero='$ogNumero'",null)
+            val cant = bdEscritura.update("contactos",registro,"numero='$ogNumero'",null)
             bdEscritura.close()
 
             if(cant==1){
