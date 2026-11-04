@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".encuestaActivity">
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="648dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/txtPrimera"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1. ¿Con que frecuencia acudes al cine?" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <RadioButton
+                    android:id="@+id/btnP1R1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="1 vez al mes" />
+
+                <RadioButton
+                    android:id="@+id/btnP1R2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="1 vez cada semana" />
+
+                <RadioButton
+                    android:id="@+id/btnP1R3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Mas de una vez a la semana" />
+
+                <RadioButton
+                    android:id="@+id/btnP1R4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Casi nunca" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/txtSegunda"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2. Califique la calidad de audio de las salas" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <RadioButton
+                    android:id="@+id/btnP2R1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Malo" />
+
+                <RadioButton
+                    android:id="@+id/btnP2R2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Regular" />
+
+                <RadioButton
+                    android:id="@+id/btnP2R3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Bueno" />
+
+                <RadioButton
+                    android:id="@+id/btnP2R4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Excelente" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/txtTercera"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="3. Califique la atención del personal antes, durante y después de la función." />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <RadioButton
+                    android:id="@+id/btnP3R1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Malo" />
+
+                <RadioButton
+                    android:id="@+id/btnP3R2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Regular" />
+
+                <RadioButton
+                    android:id="@+id/btnP3R3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Bueno" />
+
+                <RadioButton
+                    android:id="@+id/btnP3R4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Excelente" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/txtCuarta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="4. Califique el nivel de higiene en baños y salas" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <RadioButton
+                    android:id="@+id/btnP4R1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Malo" />
+
+                <RadioButton
+                    android:id="@+id/btnP4R2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Regular" />
+
+                <RadioButton
+                    android:id="@+id/btnP4R3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Bueno" />
+
+                <RadioButton
+                    android:id="@+id/btnP4R4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Excelente" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/txtQuinta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="5. ¿Qué tipo de sala prefiere?" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <RadioButton
+                    android:id="@+id/btnP5R1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="3D" />
+
+                <RadioButton
+                    android:id="@+id/btnP5R2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sala normal" />
+
+                <RadioButton
+                    android:id="@+id/btnP5R3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Macro XE" />
+
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/btnAlta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Enviar" />
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="24dp"
+        android:text="Encuesta"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
