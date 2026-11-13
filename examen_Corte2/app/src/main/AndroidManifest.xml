@@ -21,6 +21,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".encuestaActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".estadisticasActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />

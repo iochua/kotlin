@@ -47,70 +47,68 @@ class encuestaActivity : AppCompatActivity() {
         val btnAlta = findViewById<Button>(R.id.btnAlta)
 
         btnAlta.setOnClickListener {
-            btnAlta.setOnClickListener {
-                val resP1 = when {
-                    btnP1R1.isChecked -> 1
-                    btnP1R2.isChecked -> 2
-                    btnP1R3.isChecked -> 3
-                    btnP1R4.isChecked -> 4
-                    else -> 0
-                }
+            val resP1 = when {
+                btnP1R1.isChecked -> 1
+                btnP1R2.isChecked -> 2
+                btnP1R3.isChecked -> 3
+                btnP1R4.isChecked -> 4
+                else -> 0
+            }
 
-                val resP2 = when {
-                    btnP2R1.isChecked -> 1
-                    btnP2R2.isChecked -> 2
-                    btnP2R3.isChecked -> 3
-                    btnP2R4.isChecked -> 4
-                    else -> 0
-                }
+            val resP2 = when {
+                btnP2R1.isChecked -> 1
+                btnP2R2.isChecked -> 2
+                btnP2R3.isChecked -> 3
+                btnP2R4.isChecked -> 4
+                else -> 0
+            }
 
-                val resP3 = when {
-                    btnP3R1.isChecked -> 1
-                    btnP3R2.isChecked -> 2
-                    btnP3R3.isChecked -> 3
-                    btnP3R4.isChecked -> 4
-                    else -> 0
-                }
+            val resP3 = when {
+                btnP3R1.isChecked -> 1
+                btnP3R2.isChecked -> 2
+                btnP3R3.isChecked -> 3
+                btnP3R4.isChecked -> 4
+                else -> 0
+            }
 
-                val resP4 = when {
-                    btnP4R1.isChecked -> 1
-                    btnP4R2.isChecked -> 2
-                    btnP4R3.isChecked -> 3
-                    btnP4R4.isChecked -> 4
-                    else -> 0
-                }
+            val resP4 = when {
+                btnP4R1.isChecked -> 1
+                btnP4R2.isChecked -> 2
+                btnP4R3.isChecked -> 3
+                btnP4R4.isChecked -> 4
+                else -> 0
+            }
 
-                val resP5 = when {
-                    btnP5R1.isChecked -> 1
-                    btnP5R2.isChecked -> 2
-                    btnP5R3.isChecked -> 3
-                    else -> 0
-                }
+            val resP5 = when {
+                btnP5R1.isChecked -> 1
+                btnP5R2.isChecked -> 2
+                btnP5R3.isChecked -> 3
+                else -> 0
+            }
 
-                if (resP1 == 0 || resP2 == 0 || resP3 == 0 || resP4 == 0 || resP5 == 0) {
-                    Toast.makeText(this, "Por favor responde todas las preguntas", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
-                }
+            if (resP1 == 0 || resP2 == 0 || resP3 == 0 || resP4 == 0 || resP5 == 0) {
+                Toast.makeText(this, "Por favor responde todas las preguntas", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
-                val admin = AdminSQLiteOpenHelper(this, "administracion", null, 1)
-                val bd = admin.writableDatabase
+            val admin = AdminSQLiteOpenHelper(this, "administracion", null, 1)
+            val bd = admin.writableDatabase
 
-                val registro = ContentValues().apply {
-                    put("primera", resP1)
-                    put("segunda", resP2)
-                    put("tercera", resP3)
-                    put("cuarta", resP4)
-                    put("quinta", resP5)
-                }
+            val registro = ContentValues().apply {
+                put("primera", resP1)
+                put("segunda", resP2)
+                put("tercera", resP3)
+                put("cuarta", resP4)
+                put("quinta", resP5)
+            }
 
-                val resultado = bd.insert("respuestas", null, registro)
-                bd.close()
+            val resultado = bd.insert("respuestas", null, registro)
+            bd.close()
 
-                if (resultado != -1L) {
-                    Toast.makeText(this, "Encuesta registrada con éxito", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this, "Error al registrar la encuesta", Toast.LENGTH_SHORT).show()
-                }
+            if (resultado != -1L) {
+                Toast.makeText(this, "Encuesta registrada con éxito", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Error al registrar la encuesta", Toast.LENGTH_SHORT).show()
             }
         }
     }
